@@ -9,7 +9,7 @@ class SignUpView(generic.CreateView):
     template_name = 'registration/signup.html'
     success_url = reverse_lazy('login')
 
-class EditSignUpInfo(generic.UpdateView):
-    form_class = CustomUserChangeForm
-    template_name = 'registration/edit.html'
-    success_url = reverse_lazy('homepage')
+# class EditSignUpInfo(generic.UpdateView):
+#     form_class = CustomUserChangeForm
+#     template_name = 'registration/edit.html'
+#     success_url = reverse_lazy('homepage')
