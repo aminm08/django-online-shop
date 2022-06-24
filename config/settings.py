@@ -11,21 +11,28 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-btpck5p9scxp*sxlqh+k$h6(5(1q$_9)2e2_piu^-yeoe29yw5'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# for environment variables
+env = environ.Env()
+environ.Env.read_env()
 
-ALLOWED_HOSTS = []
+
+# False if not in os.environ because of casting above
+DEBUG = env.bool('DEBUG')
+
+# Raises Django's ImproperlyConfigured
+# exception if SECRET_KEY not in os.environ
+SECRET_KEY = env('SECRET_KEY')
+
+
+ALLOWED_HOSTS = ['127.0.0.1','localhost','.herokuapp.com']
 
 
 # Application definition
