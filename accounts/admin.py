@@ -1,13 +1,19 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomeUser
-from .forms import CustomUserChangeForm,CustomCreationForm
+from .models import CustomUser
+from .forms import CustomUserChangeForm, CustomUserCreationForm
 
-@admin.register(CustomeUser)
+
+@admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
-    model = CustomeUser
-    add_form =CustomCreationForm
+    model = CustomUser
+    add_form = CustomUserCreationForm
     form = CustomUserChangeForm
-    list_display = ['username','email', ]
 
-
+    fieldsets = (
+        (None, {'fields': ('profile_picture',)}),
+    )
+    add_fieldsets = (
+        (None, {'fields': ('profile_picture',)}),
+    )
+    list_display = ['username', 'email', ]
