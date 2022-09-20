@@ -1,6 +1,13 @@
 {% extends '_base.html' %}
 
 {% load i18n %}
+{% load comment_tags %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+{% load jalali_tags %}
+{% load static %}
+{% load persian_trans_tags %}
+
 {% block title %}products{% endblock title %}
 
 {% block content %}
@@ -19,17 +26,8 @@
 
 
         <!-- Breadcrumb area Start -->
-        <div class="breadcrumb-area bg-color ptb--90" data-bg-color="#f6f6f6">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="d-flex justify-content-between align-items-center flex-sm-row flex-column">
-                            <h1 class="page-title">{% trans 'details' %} {{ product.title }}</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {% translate 'Product details' as header_name %}
+        {% include 'topheader.html' with header_name=header_name %}
         <!-- Breadcrumb area End -->
 
         <!-- Main Content Wrapper Start -->
@@ -39,31 +37,41 @@
                     <div class="row no-gutters mb--80">
                         <div class="col-12 col-sm-4 product-main-image d-flex align-content-center">
                             <img class="m-auto" style="max-height: 400px;"
-                                 src="https://dkstatics-public.digikala.com/digikala-products/8f34ee9823202d09ee97deb9b1c8e3300a9a24d8_1643265727.jpg?x-oss-process=image/resize,w_1600/quality,q_80"
+                                 src="{{ product.cover.url }}"
                                  alt="">
                         </div>
                         <div class="col-12 col-sm-8 product-main-details mt-md--50">
                             <div class="product-summary pl-lg--30 pl-md--0 text-right p-4">
                                 <h3 class="product-title mb--20">{{ product.title|capfirst }}</h3>
-                                <p class="product-short-description mb--20">
-                                    {{ product.description|safe|linebreaks }}
-                                </p>
+
                                 <div class="my-5 py-5 product-price-wrapper mb--25">
-                                    <span class="money text-success">{{ product.price }} {% trans '$' %}</span>
-                                    <span class="price-separator">-</span>
-                                    <span class="money old-price text-danger">{% trans '$' %} ۲۱۰,۰۰۰ </span>
+                                    {% if product.discount %}
+                                        <span class="money text-success">{% trans '$' %}{{ product.get_final_price|intcomma|translate_numbers }}</span>
+                                        <span class="price-separator">-</span>
+                                        <span class="money old-price text-danger">{% trans '$' %}{{ product.price|intcomma|translate_numbers }}</span>
+                                    {% else %}
+                                        <span class="money text-success">{% trans '$' %}{{ product.get_final_price|intcomma|translate_numbers }}</span>
+                                    {% endif %}
                                 </div>
                                 <div class="product-action d-flex align-items-sm-center align-content-center mb--30">
                                     <div class="quantity-wrapper d-flex justify-content-start">
-                                        <div class="quantity">
-                                            <input type="number" class="quantity-input" name="qty" id="qty" value="1"
-                                                   min="1">
+
+                                        <div class="product-action d-flex align-items-sm-center align-content-center mb--30">
+                                            <form action="{% url 'cart_add' product.id %}" method="POST">
+                                                {% csrf_token %}
+                                                <div class="quantity-wrapper d-flex justify-content-start">
+                                                    <div class="quantity">
+                                                        <input type="number" class="quantity-input" name="quantity"
+                                                               id="qty" value="1" min="1" max="30">
+                                                    </div>
+                                                    <button type="submit"
+                                                            class="btn btn-small btn-bg-red btn-color-white btn-hover-2">
+                                                        {% trans 'Add to Cart' %}
+                                                    </button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
-                                    <button type="button" class="btn btn-small btn-bg-red btn-color-white btn-hover-2"
-                                            onclick="window.location.href='cart.html'">
-                                        اضافه به سبد خرید
-                                    </button>
                                 </div>
                                 <div class="product-footer-meta mt-5 pt-5">
                                     <p><span class="m-0">دسته بندی ها:</span>
@@ -90,14 +98,14 @@
                                     </a>
                                     <a class="m-0 product-data-tab__link nav-link" id="nav-reviews-tab"
                                        data-toggle="tab" href="#nav-reviews" role="tab" aria-selected="true">
-                                        <span>نظرات (۱)</span>
+                                        <span>{{ product.comments.all|active_comments|length|translate_numbers }} {% trans 'comments' %}</span>
                                     </a>
                                 </div>
                                 <div class="tab-content product-data-tab__content" id="product-tabContent">
                                     <div class="tab-pane fade show active" id="nav-description" role="tabpanel"
                                          aria-labelledby="nav-description-tab">
                                         <div class="product-description text-justify">
-                                            <p> {{ product.description }} </p>
+                                            <p> {{ product.description|safe|linebreaks }} </p>
                                         </div>
                                     </div>
                                     <div class="tab-pane text-right" id="nav-info" role="tabpanel"
@@ -129,75 +137,70 @@
                                     <div class="tab-pane fade" id="nav-reviews" role="tabpanel"
                                          aria-labelledby="nav-reviews-tab">
                                         <div class="product-reviews">
-                                            <h3 class="review__title">۱ نظر برای لباس تابستانی</h3>
+                                            <h3 class="review__title">
+                                                {{ product.comments.all|active_comments|length|translate_numbers }} {% trans 'comments for ' %} {{ product.title }}</h3>
                                             <ul class="review__list">
-                                                <li class="review__item">
-                                                    <div class="review__container">
-                                                        <div class="review__text">
-                                                            <div class="d-flex flex-sm-row flex-row">
-                                                                <img src="assets/img/others/comment-1.jpg"
-                                                                     alt="Review Avatar" class="review__avatar">
-                                                                <div>
-                                                                    <div class="review__meta">
-                                                                        <strong class="review__author px-4">علی
-                                                                            علوی</strong>
-                                                                        <span class="review__dash">-</span>
-                                                                        <span class="review__published-date">۱۲ مرداد ۱۴۰۱</span>
-                                                                    </div>
-                                                                    <div class="product-rating">
-                                                                        <div class="m-0 star-rating star-five">
-                                                                            <span>Rated <strong
-                                                                                    class="rating">5.00</strong> out of 5</span>
+                                                {% for comment in product.comments.all|active_comments %}
+                                                    <li class="review__item">
+                                                        <div class="review__container">
+
+                                                            <div class="review__text">
+                                                                <div class="d-flex flex-sm-row flex-row">
+                                                                    {% if comment.author.profile_picture %}
+                                                                        <img src="{{ comment.author.profile_picture.url }}"
+                                                                             alt="Review Avatar" class="review__avatar">
+                                                                    {% else %}
+                                                                        <img src="{% static 'img/others/comment-1.jpg' %}"
+                                                                             alt="Review Avatar" class="review__avatar">
+                                                                    {% endif %}
+                                                                    <div>
+                                                                        <div class="review__meta" dir="ltr">
+                                                                            <span class="review__published-date">{{ comment.datetime_created|to_jalali:'%Y %B %d'|translate_numbers }}</span>
+                                                                            <span class="review__dash">-</span>
+                                                                            <strong class="review__author px-4">{{ comment.author.username }}</strong>
+                                                                        </div>
+                                                                        <div class="product-rating">
+                                                                            <div class="m-0 star-rating star-five">
+                                                                            <span>{% trans 'Rated' %} <strong
+                                                                                    class="rating">5.00</strong>{% trans 'out of' %} 5</span>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                <p class="review__description text-right px-4 pt-2">
+                                                                    {{ comment.body|linebreaks }}
+                                                                </p>
                                                             </div>
-                                                            <p class="review__description text-right px-4">
-                                                                از خرید خودم راضی هستم. واقعا خیلی خوب بسته بندی شده بود
-                                                                و همینطور سر زمان رسید. واقعا نسبت به قیمت خیلی می ارزه.
-                                                            </p>
                                                         </div>
-                                                    </div>
-                                                </li>
+                                                    </li>
+                                                {% endfor %}
                                             </ul>
                                             <div class="review-form-wrapper">
                                                 <div class="row">
                                                     <div class="border-top py-5 w-100"></div>
                                                     <div class="col-lg-8 m-auto">
-                                                        <span class="reply-title pull-right">نظر خود را بنویسید</span>
                                                         <br>
-                                                        <form action="#" class="form text-right">
-                                                            <div class="form-notes mb--20">
-                                                                <p class="my-3"><span class="required">*</span>ایمیل شما
-                                                                    برای دیگران نشان داده نمیشود.</p>
-                                                            </div>
-                                                            <div class="form__group mb--10">
-                                                                <label class="form__label d-block" for="email">متن نظر
-                                                                    شما<span class="required">*</span></label>
-                                                                <textarea name="review" id="review"
-                                                                          class="form__input form__input--textarea"></textarea>
-                                                            </div>
-                                                            <div class="form__group mb--20">
-                                                                <label class="form__label d-block" for="name">نام
-                                                                    شما<span class="required">*</span></label>
-                                                                <input type="text" name="name" id="name"
-                                                                       class="form__input">
-                                                            </div>
-                                                            <div class="form__group mb--20">
-                                                                <label class="form__label d-block" for="email">ایمیل شما<span
-                                                                        class="required">*</span></label>
-                                                                <input type="email" name="email" id="email"
-                                                                       class="form__input">
-                                                            </div>
-                                                            <div class="form__group">
-                                                                <div class="form-row">
-                                                                    <div class="col-12">
-                                                                        <input type="submit" value="ارسال"
-                                                                               class="btn-submit">
+                                                        {% if user.is_authenticated %}
+                                                            <span class="reply-title pull-right">
+                                                                {% trans 'write your comment' %}
+                                                            </span>
+                                                            <br>
+                                                            <form action="{% url 'comment create' product.id %}"
+                                                                  method="post" class="form text-right">
+                                                                {% csrf_token %}
+                                                                {{ comment_form|crispy }}
+
+                                                                <div class="form__group">
+                                                                    <div class="form-row">
+                                                                        <div class="col-12">
+                                                                            <input type="submit"
+                                                                                   value="{% trans 'Submit' %}"
+                                                                                   class="btn-submit">
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        </form>
+                                                            </form>
+                                                        {% endif %}
                                                     </div>
                                                 </div>
                                             </div>
@@ -212,33 +215,7 @@
         </div>
         <!-- Main Content Wrapper End -->
 
-        <!-- Footer Start-->
-        <footer class="footer">
-            <div class="footer-top bg-color ptb--50" data-bg-color="#f6f6f6">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-9 text-center">
-                            <div class="footer-widget mb--50">
-                                <div class="textwidget">
-                                    <img src="assets/img/codingyar_logo.png" alt="Logo">
-                                </div>
-                            </div>
-                            <div class="footer-widget mb--50 pb--1">
-                                <ul class="footer-menu">
-                                    <li><a href="">درباره ما</a></li>
-                                    <li><a href="">قوانین و مقررات</a></li>
-                                    <li><a href="">تماس با ما</a></li>
-                                </ul>
-                            </div>
-                            <div class="footer-widget">
-                                Codingyar.com © | all rights reserved
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- Footer End-->
+
 
         <!-- Search form Popup Start -->
         <div class="searchform__popup" id="searchForm">
@@ -255,82 +232,7 @@
         </div>
         <!-- Search form Popup End -->
 
-        <!-- Mini Cart Start -->
-        <aside class="mini-cart" id="miniCart">
-            <div class="mini-cart-wrapper">
-                <a href="" class="btn-close"><i class="flaticon flaticon-cross"></i></a>
-                <div class="mini-cart-inner">
-                    <h3 class="mini-cart__heading mb--40 mb-lg--30 text-right">سبد خرید</h3>
-                    <div class="mini-cart__content">
-                        <ul class="mini-cart__list text-right">
-                            <li class="mini-cart__product d-flex justify-content-between">
-                                <div class="mini-cart__product__image">
-                                    <a href="#">
-                                        <img src="assets/img/products/prod-1-100x100.jpg" alt="products">
-                                    </a>
-                                </div>
-                                <div class="mini-cart__product__content pt-2">
-                                    <span class="mini-cart__product__title d-flex flex-row justify-content-between">
-                                        <a href="#"> محصول سماره یک </a>
-                                        <a href="#" class="">
-                                            &#10060;
-                                        </a>
-                                    </span>
-                                    <span class="mini-cart__product__quantity">
-                                        <span>۴۹,۰۰۰ تومان</span> &#215; <span>۱</span>
-                                    </span>
-                                </div>
-                            </li>
-                            <li class="mini-cart__product d-flex justify-content-between">
-                                <div class="mini-cart__product__image">
-                                    <a href="#">
-                                        <img src="assets/img/products/prod-1-100x100.jpg" alt="products">
-                                    </a>
-                                </div>
-                                <div class="mini-cart__product__content pt-2">
-                                    <span class="mini-cart__product__title d-flex flex-row justify-content-between">
-                                        <a href="#"> محصول سماره یک </a>
-                                        <a href="#" class="">
-                                            &#10060;
-                                        </a>
-                                    </span>
-                                    <span class="mini-cart__product__quantity">
-                                        <span>۴۹,۰۰۰ تومان</span> &#215; <span>۱</span>
-                                    </span>
-                                </div>
-                            </li>
-                            <li class="mini-cart__product d-flex justify-content-between">
-                                <div class="mini-cart__product__image">
-                                    <a href="#">
-                                        <img src="assets/img/products/prod-1-100x100.jpg" alt="products">
-                                    </a>
-                                </div>
-                                <div class="mini-cart__product__content pt-2">
-                                    <span class="mini-cart__product__title d-flex flex-row justify-content-between">
-                                        <a href="#"> محصول سماره یک </a>
-                                        <a href="#" class="">
-                                            &#10060;
-                                        </a>
-                                    </span>
-                                    <span class="mini-cart__product__quantity">
-                                        <span>۴۹,۰۰۰ تومان</span> &#215; <span>۱</span>
-                                    </span>
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="mini-cart__total">
-                            <span>جمع کل</span>
-                            <span class="ammount">۱۴۸,۰۰۰ تومان</span>
-                        </div>
-                        <div class="mini-cart__buttons">
-                            <a href="cart.html" class="btn btn-fullwidth btn-bg-sand mb--20">مشاهده سبد خرید</a>
-                            <a href="checkout.html" class="btn btn-fullwidth btn-bg-sand">پرداخت</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </aside>
-        <!-- Mini Cart End -->
+
 
         <!-- Global Overlay Start -->
         <div class="ShoppingYar-global-overlay"></div>

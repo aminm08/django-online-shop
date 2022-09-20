@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -10,18 +11,18 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicons -->
-    <link rel="shortcut icon" href="{% static 'img/favicon.ico'%}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
     <link rel="apple-touch-icon" href="{% static 'img/icon.png' %}">
 
     <!-- ************************* CSS Files ************************* -->
 
-    <link rel="stylesheet" href="{% static 'css/_base.css'%}">
+    <link rel="stylesheet" href="{% static 'css/_base.css' %}">
 
     <!-- Vendor CSS -->
-    <link rel="stylesheet" href="{% static 'css/vendor.css'%}">
+    <link rel="stylesheet" href="{% static 'css/vendor.css' %}">
 
     <!-- style css -->
-    <link rel="stylesheet" href="{% static 'css/main.css'%}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
 
     <title>{% block title %}{% endblock title %}</title>
 
@@ -40,30 +41,31 @@
                         <div class="site-branding" style="margin-right: 30px;">
                             <a href="index.html" class="logo">
                                 <figure class="logo--normal d-none d-sm-block">
-                                    <img class="px-5" src="assets/img/codingyar_logo.png" style="max-height: 50px; margin-bottom: -15px;" alt="Logo">
+                                    <img class="px-5" src="{% static 'img/codingyar_logo.png' %}"
+                                         style=" max-height: 50px; margin-bottom: -15px;" alt="Logo">
                                 </figure>
                             </a>
                         </div>
                         <div class="mainmenu-nav d-none d-lg-block w-100 pr-3">
                             <ul class="mainmenu d-lg-flex jusity-content-end jusity-content-lg-start pt-4">
                                 <li class="mainmenu__item menu-item-has-children active">
-                                    <a href="index.html" class="mainmenu__link">
-                                        <span class="mm-text">خانه</span>
+                                    <a href="{% url 'homepage' %}" class="mainmenu__link">
+                                        <span class="mm-text">{% trans 'Home' %}</span>
+                                    </a>
+                                </li>
+                                <li class="mainmenu__item menu-item-has-children">
+                                    <a href="{% url 'products_list' %}" class="mainmenu__link">
+                                        <span class="mm-text">{% trans 'Products' %}</span>
                                     </a>
                                 </li>
                                 <li class="mainmenu__item menu-item-has-children">
                                     <a href="Blog.html" class="mainmenu__link">
-                                        <span class="mm-text">وبلاگ</span>
+                                        <span class="mm-text">{% trans 'Blog' %}</span>
                                     </a>
                                 </li>
-                                <li class="mainmenu__item menu-item-has-children">
-                                    <a href="#" class="mainmenu__link">
-                                        <span class="mm-text">صفحات</span>
-                                    </a>
-                                 </li>
                                 <li class="mainmenu__item">
                                     <a href="contact-us.html" class="mainmenu__link">
-                                        <span class="mm-text">تماس با ما</span>
+                                        <span class="mm-text">{% trans 'Contact us' %}</span>
                                     </a>
                                 </li>
                             </ul>
@@ -80,26 +82,34 @@
                         <li class="header-toolbar__item mini-cart-item">
                             <a href="#miniCart" class="header-toolbar__btn toolbar-btn mini-cart-btn">
                                 <i class="flaticon flaticon-shopping-cart"></i>
-                                <sup class="mini-cart-count">2</sup>
+                                <sup class="mini-cart-count">{{ cart|length }}</sup>
                             </a>
                         </li>
                         <li class="header-toolbar__item user-info">
-                            <a href="my-account.html" class="header-toolbar__btn">
+                            <a href="{% url 'profile' %}" class="header-toolbar__btn">
                                 <i class="flaticon flaticon-user"></i>
                             </a>
                             <ul class="user-info-menu">
-                                <li>
-                                    <a class="text-right" href="my-account.html">حساب کاربری</a>
-                                </li>
-                                <li>
-                                    <a class="text-right" href="cart.html">سبد خرید</a>
-                                </li>
-                                <li>
-                                    <a class="text-right" href="wishlist.html">علاقه مندی ها</a>
-                                </li>
-                                <li>
-                                    <a class="text-right" href="order-tracking.html">تاریخچه سفارشات</a>
-                                </li>
+                                {% if user.is_authenticated %}
+                                    <li>
+                                        <a class="text-right" href="{% url 'profile' %}">{% trans 'User account' %}</a>
+                                    </li>
+                                    <li>
+                                        <a class="text-right" href="{% url 'account_logout' %}">{% trans 'Logout' %}</a>
+                                    </li>
+                                    <li>
+                                        <a class="text-right" href="{% url 'cart_detail' %}">{% trans 'Cart' %}</a>
+                                    </li>
+
+                                {% else %}
+                                    <li>
+                                        <a class="text-right" href="{% url 'account_login' %}">{% trans 'Login' %}</a>
+                                    </li>
+                                    <li>
+                                        <a class="text-right" href="{% url 'account_signup' %}">{% trans 'Signup' %}</a>
+                                    </li>
+
+                                {% endif %}
                             </ul>
                         </li>
                         <li class="header-toolbar__item">
@@ -120,17 +130,42 @@
 </header>
 <!-- Header End -->
 
+{% if messages %}
+    <div class="container">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% include 'cart/cart_sidebar.html' %}
+
+<div class="searchform__popup" id="searchForm">
+    <a href="#" class="btn-close"><i class="flaticon flaticon-cross"></i></a>
+    <div class="searchform__body">
+        <p>در باکس زیر عبارت خود را وارد کنید</p>
+        <form class="searchform">
+            <input type="text" name="popup-search" id="popup-search" class="searchform__input"
+                   placeholder="جستجو در بین محصولات...">
+            <button type="submit" class="searchform__submit"><i
+                    class="flaticon flaticon-magnifying-glass-icon"></i></button>
+        </form>
+    </div>
+</div>
+
+
 {% block content %}
 
 {% endblock content %}
 
-    <!-- ************************* JS Files ************************* -->
+{% include 'footer.html' %}
+<!-- ************************* JS Files ************************* -->
 
-    <!-- jQuery JS -->
-    <script src="{% static 'js/vendor.js' %}"></script>
+<!-- jQuery JS -->
+<script src="{% static 'js/vendor.js' %}"></script>
 
-    <!-- Main JS -->
-    <script src="{% static 'js/main.js' %}"></script>
+<!-- Main JS -->
+<script src="{% static 'js/main.js' %}"></script>
 
 
 </body>
