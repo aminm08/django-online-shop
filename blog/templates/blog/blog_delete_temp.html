@@ -1,0 +1,26 @@
+{% extends '_base.html' %}
+
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}{% trans 'Delete blog' %}{% endblock title %}
+
+{% block content %}
+
+    <div class="container ">
+        <div class="row">
+
+            <div class="col-12 ">
+                <div class="card shadow my-3 p-5">
+                    <h1>{% trans 'Are you sure you want to delete' %} {{ blog.title }} ?</h1>
+                    <form method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success">{% trans 'Yes delete' %}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock content %}

@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import BlogPost
+
+
+@admin.register(BlogPost)
+class PostAdmin(admin.ModelAdmin):
+    list_display = ('title', 'status', 'datetime_modified')

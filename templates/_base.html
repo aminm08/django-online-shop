@@ -59,7 +59,7 @@
                                     </a>
                                 </li>
                                 <li class="mainmenu__item menu-item-has-children">
-                                    <a href="Blog.html" class="mainmenu__link">
+                                    <a href="{% url 'blog_list' %}" class="mainmenu__link">
                                         <span class="mm-text">{% trans 'Blog' %}</span>
                                     </a>
                                 </li>
@@ -167,6 +167,9 @@
 <!-- Main JS -->
 <script src="{% static 'js/main.js' %}"></script>
 
+<!-- ckeditor -->
+<script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+<script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
 
 </body>
 </html>

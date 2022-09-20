@@ -1,0 +1,28 @@
+{% extends '_base.html' %}
+
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}{% trans 'Create blog' %}{% endblock title %}
+
+{% block content %}
+
+    <div class="container ">
+        <div class="row">
+
+            <div class="col-12 ">
+                <div class="card shadow my-3 p-5">
+
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.media }}
+                        {{ form|crispy }}
+                        <button type="submit" class="btn btn-success">{% trans 'Submit' %}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock content %}

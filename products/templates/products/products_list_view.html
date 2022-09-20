@@ -75,7 +75,7 @@
                                                                 <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
                                                             </h3>
                                                             <div class="product-price-wrapper mb--30">
-                                                                <span class="money">{% trans '$' %}{{ product.price|intcomma|translate_numbers }}</span>
+                                                                <span class="money">{{ product.price|intcomma|translate_numbers }} {% trans '$' %}</span>
                                                             </div>
 
                                                             <form action="{% url 'cart_add' product.id %}"

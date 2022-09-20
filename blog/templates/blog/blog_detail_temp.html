@@ -1,0 +1,36 @@
+{% extends '_base.html' %}
+{% load static %}
+{% load i18n %}
+{% load jalali_tags %}
+{% load persian_trans_tags %}
+{% block title %}{{ blog.title }}{% endblock title %}
+
+
+{% block content %}
+    <div class="container text-center mt-4">
+        <div class="row align-items-start">
+            <div class="col-sm-12" dir="ltr">
+                {% if user == blog.author %}
+
+                    <span style="float: left;"><a href="{% url 'blog_update' blog.id %}"
+                                                  class="btn  btn-warning">{% trans 'Edit' %}</a></span>
+                    <span style="float: left;"><a href="{% url 'blog_delete' blog.id %}"
+                                                  class="btn  btn-danger">{% trans 'Delete' %}</a></span>
+                {% endif %}
+            </div>
+            <div class="col-12">
+                <div class="card shadow my-3 p-5">
+                    <h1 class="card-title">{{ blog.title|capfirst }}</h1>
+
+
+                    <p class="small text-muted mt-2">نویسنده: {{ blog.author }} </p>
+                    <p class="small text-muted mt-2" dir="ltr">{{ blog.datetime_created|to_jalali:'%Y %B %d'|translate_numbers }}</p>
+
+                    <p class="mt-2 card-text">{{ blog.text|safe|linebreaks }}</p>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock content %}
