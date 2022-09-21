@@ -61,7 +61,7 @@
                                                     </td>
                                                     <td class=" product-price">
                                                             <span class="product-price-wrapper">
-                                                                <span class="money">{{ item.product_obj.get_final_price|intcomma|translate_numbers }}</span>
+                                                                <span class="money">{{ item.product_obj.get_final_price|intcomma:False|translate_numbers }}</span>
                                                             </span>
                                                     </td>
                                                     <td class="product-quantity">
@@ -85,7 +85,7 @@
                                                     </td>
                                                     <td class="product-total-price">
                                                             <span class="product-price-wrapper">
-                                                                <span class="money">{% trans '$' %}{{ item.total_price|intcomma|translate_numbers }}</span>
+                                                                <span class="money">{{ item.total_price|intcomma:False|translate_numbers }} {% trans '$' %}</span>
                                                             </span>
                                                     </td>
                                                 </tr>
@@ -123,7 +123,7 @@
                                         </div>
                                         <div class="cart-calculator__item--value">
                                                 <span class="product-price-wrapper">
-                                                    <span class="money">{% trans '$' %}{{ cart.get_total_price|intcomma|translate_numbers }}</span>
+                                                    <span class="money">{{ cart.get_total_price|intcomma:False|translate_numbers }} {% trans '$' %}</span>
                                                 </span>
                                         </div>
                                     </div>
