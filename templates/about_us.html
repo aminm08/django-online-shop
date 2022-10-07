@@ -1,11 +1,11 @@
 {% extends '_base.html' %}
 
-
-{% block title %}homepage{% endblock title %}
+{% load i18n %}
+{% block title %}{% trans 'About us' %}{% endblock title %}
 
 
 {% block content %}
 
-    <h1>about us</h1>
+    <h1>{% trans 'About us' %}</h1>
 
 {% endblock content %}

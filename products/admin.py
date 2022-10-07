@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from jalali_date.admin import ModelAdminJalaliMixin
-from .models import Product, Comment
+from .models import Product, Comment, WishList
 
 
 @admin.register(Product)
@@ -15,3 +15,6 @@ class CommentAdmin(admin.ModelAdmin):
     list_display = ['author', 'rating', 'datetime_created', 'product']
     ordering = ['-datetime_created']
     list_filter = ['active', ]
+
+
+admin.site.register(WishList)

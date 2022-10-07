@@ -11,8 +11,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-import environ
-import os
+from django.contrib.messages import constants as co
+import environ, os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -65,6 +65,7 @@ SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -73,6 +74,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'config.urls'
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale/',
+]
 
 TEMPLATES = [
     {
@@ -137,7 +142,9 @@ AUTHENTICATION_BACKENDS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
+
 LANGUAGE_CODE = 'fa-ir'
+
 LANGUAGES = (
     ('en', 'English'),
     ('fa', 'Persian'),
@@ -179,3 +186,8 @@ CRISPY_TEMPLATE_PATH = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 # email
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+MESSAGE_TAGS = {
+    co.ERROR: 'danger',
+    co.WARNING: 'warning'
+}

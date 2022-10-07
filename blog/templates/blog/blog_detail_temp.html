@@ -23,7 +23,7 @@
                     <h1 class="card-title">{{ blog.title|capfirst }}</h1>
 
 
-                    <p class="small text-muted mt-2">نویسنده: {{ blog.author }} </p>
+                    <p class="small text-muted mt-2">{% trans 'Author' %}:{{ blog.author }} </p>
                     <p class="small text-muted mt-2" dir="ltr">{{ blog.datetime_created|to_jalali:'%Y %B %d'|translate_numbers }}</p>
 
                     <p class="mt-2 card-text">{{ blog.text|safe|linebreaks }}</p>

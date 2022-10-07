@@ -1,0 +1,389 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-07 11:14+0330\n"
+"PO-Revision-Date: 2022-10-07 11:31+0330\n"
+"Last-Translator:   <>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Translated-Using: django-rosetta 0.9.8\n"
+
+#: .\accounts\views.py:16
+msgid "your profile updated successfully"
+msgstr "پروفایل شما با موفقیت بروزرسانی شد"
+
+#: .\blog\models.py:15
+msgid "blog title"
+msgstr "عنوان بلاگ"
+
+#: .\blog\models.py:16
+msgid "short description"
+msgstr "توضیح کوتاه"
+
+#: .\blog\models.py:18
+msgid "blog author"
+msgstr "نویسنده بلاگ"
+
+#: .\blog\models.py:19
+msgid "blog cover"
+msgstr "تصویر بلاگ"
+
+#: .\blog\models.py:22
+msgid "is this blog active?"
+msgstr "آیا این بلاگ فعال است؟"
+
+#: .\blog\templates\blog\blog_create_temp.html:6
+msgid "Create blog"
+msgstr "ساخت بلاگ"
+
+#: .\blog\templates\blog\blog_create_temp.html:20
+#: .\blog\templates\blog\blog_update_temp.html:20
+#: .\products\templates\products\products_detail_view.html:164
+msgid "Submit"
+msgstr "ثبت"
+
+#: .\blog\templates\blog\blog_delete_temp.html:6
+msgid "Delete blog"
+msgstr "حذف بلاگ"
+
+#: .\blog\templates\blog\blog_delete_temp.html:15
+msgid "Are you sure you want to delete"
+msgstr "ایا از حذف کردن مطمئن هستید؟"
+
+#: .\blog\templates\blog\blog_delete_temp.html:18
+msgid "Yes delete"
+msgstr "بلهو حذف بلاگ"
+
+#: .\blog\templates\blog\blog_detail_temp.html:16
+msgid "Edit"
+msgstr "تصحیح"
+
+#: .\blog\templates\blog\blog_detail_temp.html:18
+msgid "Delete"
+msgstr "حذف"
+
+#: .\blog\templates\blog\blog_detail_temp.html:26
+msgid "Author"
+msgstr "نویسنده"
+
+#: .\blog\templates\blog\blog_list_temp.html:7
+#: .\products\templates\products\products_list_view.html:6
+#: .\products\templates\products\wish_list.html:6 .\templates\_base.html:58
+msgid "Products"
+msgstr "محصولات"
+
+#: .\blog\templates\blog\blog_update_temp.html:6
+msgid "Update blog"
+msgstr "بروزرسانی بلاگ"
+
+#: .\blog\views.py:30
+msgid "your Blog post is now submitted"
+msgstr "پست بلاگ شما ثبت شده"
+
+#: .\blog\views.py:43
+msgid "your Blog Post Successfully updated"
+msgstr "پست بلاگ شما با موفقیت بروزرسانی شد"
+
+#: .\blog\views.py:54
+msgid "your Blog Post successfully deleted"
+msgstr "پست بلاگ شما با موفقیت حذف شد"
+
+#: .\cart\cart.py:31
+msgid "Cart updated successfully"
+msgstr "سبد خرید شما با موفقیت بروزرسانی شد"
+
+#: .\cart\cart.py:39
+msgid "Item successfully deleted from cart"
+msgstr "محصول با موفقیت از سبد خرید حذف شد"
+
+#: .\cart\templates\cart\cart_detail_temp.html:9
+#: .\cart\templates\cart\cart_detail_temp.html:13
+#: .\cart\templates\cart\cart_sidebar.html:7
+msgid "Cart"
+msgstr "سبد خرید"
+
+#: .\cart\templates\cart\cart_detail_temp.html:88
+#: .\cart\templates\cart\cart_detail_temp.html:126
+#: .\cart\templates\cart\cart_sidebar.html:26
+#: .\cart\templates\cart\cart_sidebar.html:36
+#: .\products\templates\products\products_detail_view.html:51
+#: .\products\templates\products\products_detail_view.html:53
+#: .\products\templates\products\products_detail_view.html:55
+#: .\products\templates\products\products_list_view.html:86
+#: .\products\templates\products\wish_list.html:52
+msgid "$"
+msgstr "تومان"
+
+#: .\cart\templates\cart\cart_detail_temp.html:98
+msgid "Cart is Empty! Please add some products to the cart"
+msgstr "سبد خرید شما خالی است. لطفا محصولی به آن اضافه کنید"
+
+#: .\cart\templates\cart\cart_detail_temp.html:99
+msgid "Go shopping"
+msgstr "خرید کنید"
+
+#: .\cart\templates\cart\cart_detail_temp.html:108
+msgid "Empty cart"
+msgstr "خالی کردن سبد خرید"
+
+#: .\cart\templates\cart\cart_detail_temp.html:118
+#: .\cart\templates\cart\cart_sidebar.html:35
+msgid "Total"
+msgstr "مجموع"
+
+#: .\cart\templates\cart\cart_detail_temp.html:122
+msgid "Total price"
+msgstr "مجموع قیمت"
+
+#: .\cart\templates\cart\cart_detail_temp.html:133
+#: .\cart\templates\cart\cart_sidebar.html:40
+msgid "Checkout"
+msgstr "پرداخت"
+
+#: .\cart\templates\cart\cart_sidebar.html:39
+msgid "Go to my Cart"
+msgstr "رفتن به سبد خرید من"
+
+#: .\cart\views.py:46
+msgid "your cart is now empty"
+msgstr "سبد خرید شما خالی شد"
+
+#: .\cart\views.py:48
+msgid "your cart is already empty!"
+msgstr "در حال حاضر سبد خرید شما خالی است"
+
+#: .\products\models.py:11
+msgid "product title"
+msgstr "عنوان محصول"
+
+#: .\products\models.py:12
+msgid "product description"
+msgstr "توضیحات محصول"
+
+#: .\products\models.py:13
+msgid "product price"
+msgstr "قیمت محصول"
+
+#: .\products\models.py:14
+msgid "discount on this product"
+msgstr "تخفیف موجود بر روی این محصول"
+
+#: .\products\models.py:15
+msgid "is this product available"
+msgstr "آیا این محصول موجود است ؟"
+
+#: .\products\models.py:16
+msgid "Product cover"
+msgstr "تصویر محصول"
+
+#: .\products\models.py:18
+msgid "Creation date time"
+msgstr "تاریخ اضافه شدن "
+
+#: .\products\models.py:35
+msgid "Very bad"
+msgstr "افتضاح"
+
+#: .\products\models.py:36
+msgid "Bad"
+msgstr "بد"
+
+#: .\products\models.py:37
+msgid "Normal"
+msgstr "معمولی"
+
+#: .\products\models.py:38
+msgid "Good"
+msgstr "خوب"
+
+#: .\products\models.py:39
+msgid "Perfect"
+msgstr "بی نقص"
+
+#: .\products\models.py:42
+msgid "Comment text"
+msgstr "متن نظر"
+
+#: .\products\models.py:43
+msgid "your score"
+msgstr "امتیاز شما"
+
+#: .\products\models.py:47
+msgid "is this comment active"
+msgstr "آیا این نظر فعال است؟"
+
+#: .\products\templates\products\products_detail_view.html:29
+msgid "Product details"
+msgstr "جزئیات محصول"
+
+#: .\products\templates\products\products_detail_view.html:71
+msgid "Add to Cart"
+msgstr "اضافه کردن به سبد خرید"
+
+#: .\products\templates\products\products_detail_view.html:88
+msgid "Product description"
+msgstr "توضیحات محصول"
+
+#: .\products\templates\products\products_detail_view.html:93
+msgid "comments"
+msgstr "نطرات"
+
+#: .\products\templates\products\products_detail_view.html:108
+msgid "comments for "
+msgstr "نطرات  برای"
+
+#: .\products\templates\products\products_detail_view.html:131
+msgid "Rated"
+msgstr "امتیاز داده "
+
+#: .\products\templates\products\products_detail_view.html:132
+msgid "out of"
+msgstr "از"
+
+#: .\products\templates\products\products_detail_view.html:152
+msgid "write your comment"
+msgstr "نظرت رو بنویس"
+
+#: .\products\templates\products\products_list_view.html:61
+msgid "off"
+msgstr "تخفیف"
+
+#: .\products\templates\products\products_list_view.html:95
+msgid "Add to cart"
+msgstr "اضافه کردن به سبد خرید"
+
+#: .\products\views.py:36
+msgid "your comment successfully added "
+msgstr "نظر شما با موفقیت اضافه شد"
+
+#: .\products\views.py:70
+msgid "product successfully added to wishlist"
+msgstr "محصول با موفقیت به لیست دلخواه های شما اضافه شد"
+
+#: .\products\views.py:74
+msgid "this product is already in your wishlist"
+msgstr "این محصول در لیست دلخواه ها وجود دارد"
+
+#: .\templates\_base.html:53
+msgid "Home"
+msgstr "خانه"
+
+#: .\templates\_base.html:63
+msgid "Blog"
+msgstr "وبلاگ"
+
+#: .\templates\_base.html:68 .\templates\contact_us.html:5
+#: .\templates\contact_us.html:12 .\templates\footer.html:16
+msgid "Contact us"
+msgstr "ارتباط با ما"
+
+#: .\templates\_base.html:74 .\templates\account\login.html:6
+#: .\templates\account\login.html:13 .\templates\account\login.html:21
+msgid "Login"
+msgstr "ورود"
+
+#: .\templates\_base.html:79 .\templates\account\login.html:22
+#: .\templates\account\signup.html:6 .\templates\account\signup.html:17
+msgid "Signup"
+msgstr "ثبت نام"
+
+#: .\templates\_base.html:111
+msgid "User account"
+msgstr "حساب کاربری"
+
+#: .\templates\_base.html:115 .\templates\account\logout.html:6
+msgid "Logout"
+msgstr "خروج"
+
+#: .\templates\_base.html:153
+msgid "search using he box below"
+msgstr "از طریق باکس زیر جستجو کنید"
+
+#: .\templates\about_us.html:4 .\templates\about_us.html:9
+#: .\templates\footer.html:17
+msgid "About us"
+msgstr "درباره ما"
+
+#: .\templates\account\email\email_confirmation_message.txt:6
+#, python-format, fuzzy
+msgid ""
+"\n"
+"Hello from %(site_name)s.\n"
+"if you requested this email please click on the link below :\n"
+"%(activate_url)s\n"
+msgstr ""
+"\n"
+"سلام\n"
+
+#: .\templates\account\email\email_confitmation_subject.txt:3
+msgid "please confirm email"
+msgstr "لطفا رایانامه را تایید کنید"
+
+#: .\templates\account\email_confirm.html:5
+#: .\templates\account\email_confirm.html:9
+msgid "Confirm E-mail Address"
+msgstr "تایید ادرس رایانامه"
+
+#: .\templates\account\email_confirm.html:15
+#, python-format, fuzzy
+msgid ""
+"Please confirm that <a href=\"mailto:%(email)s\">%(email)s</a> is an e-mail "
+"address for user %(user_display)s."
+msgstr ""
+
+#: .\templates\account\email_confirm.html:19
+msgid "Confirm"
+msgstr "تایید"
+
+#: .\templates\account\email_confirm.html:26
+#, python-format, fuzzy
+msgid ""
+"This e-mail confirmation link expired or is invalid. Please <a "
+"href=\"%(email_url)s\">issue a new e-mail confirmation request</a>."
+msgstr ""
+
+#: .\templates\account\login.html:22
+msgid "don't have an account?"
+msgstr "ثبت نام نکردی؟ "
+
+#: .\templates\account\logout.html:11
+msgid "are you sure you want to logout"
+msgstr "ایا از خروج اطمینان دارید"
+
+#: .\templates\account\logout.html:18
+msgid "Yes"
+msgstr "بله"
+
+#: .\templates\account\profile.html:6
+msgid "Profile"
+msgstr "پروفایل"
+
+#: .\templates\account\profile.html:32
+msgid "Update profile"
+msgstr "بروزرسانی پروفایل"
+
+#: .\templates\account\profile.html:33
+msgid "Change password"
+msgstr "تغییر رمز عبور"
+
+#: .\templates\account\signup.html:11
+msgid "Sign up"
+msgstr "ثبت نام"
+
+#: .\templates\account\signup.html:18
+msgid "have an account?"
+msgstr "ثبت نام کردی؟"
+
+#: .\templates\account\signup.html:18
+msgid "login"
+msgstr "ورود"

@@ -1,10 +1,12 @@
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.utils.translation import gettext as _
+from django.contrib.auth.decorators import login_required
 
 from .forms import CustomUserChangeForm
 
 
+@login_required()
 def user_profile_view(request):
     form = CustomUserChangeForm(instance=request.user)
     if request.method == 'POST':

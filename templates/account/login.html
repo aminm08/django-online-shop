@@ -2,19 +2,27 @@
 
 {% load crispy_forms_tags %}
 
-
-{% block title %}Login{% endblock title %}
+{% load i18n %}
+{% block title %}{% trans 'Login' %}{% endblock title %}
 
 
 {% block content %}
-
-    <h1>Login</h1>
-
-    <form method="post">
+    <div class="container">
 
 
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button type="submit">Login</button>
-    </form>
+        <h1 class="">{% trans 'Login' %}</h1>
+
+        <form method="post" class='mb-lg-5'>
+
+
+            {% csrf_token %}
+            <div class="mt-3">
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-success ">{% trans 'Login' %}</button>
+                <p class="text-muted">{% trans "don't have an account?" %} <a href="{% url 'account_signup' %}">{% trans 'Signup' %}</a> </p>
+            </div>
+        </form>
+
+
+    </div>
 {% endblock content %}

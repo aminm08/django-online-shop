@@ -19,7 +19,7 @@ class BlogPost(models.Model):
     cover = models.ImageField(upload_to='blog_covers/', verbose_name=_('blog cover'))
     datetime_created = models.DateTimeField(auto_now_add=True)
     datetime_modified = models.DateTimeField(auto_now=True)
-    status = models.CharField(choices=STATUS_CHOICES, max_length=1, verbose_name=_('is this blog active?'))
+    status = models.CharField(choices=STATUS_CHOICES, max_length=1, verbose_name=_("blog's status"))
 
     def __str__(self):
         return self.title

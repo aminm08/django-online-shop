@@ -64,54 +64,61 @@
                                     </a>
                                 </li>
                                 <li class="mainmenu__item">
-                                    <a href="contact-us.html" class="mainmenu__link">
+                                    <a href="{% url 'contact_us' %}" class="mainmenu__link">
                                         <span class="mm-text">{% trans 'Contact us' %}</span>
                                     </a>
                                 </li>
+                                {% if not user.is_authenticated %}
+                                    <li class="mainmenu__item">
+                                        <a href="{% url 'account_login' %}" class="mainmenu__link">
+                                            <span class="mm-text">{% trans 'Login' %}</span>
+                                        </a>
+                                    </li>
+                                    <li class="mainmenu__item">
+                                        <a href="{% url 'account_signup' %}" class="mainmenu__link">
+                                            <span class="mm-text">{% trans 'Signup' %}</span>
+                                        </a>
+                                    </li>
+                                {% endif %}
                             </ul>
                         </div>
                     </nav>
                 </div>
                 <div class="col-xl-3 col-lg-4 col-sm-7 col-12 p-0">
                     <ul class="header-toolbar">
-                        <li class="header-toolbar__item">
-                            <a href="wishlist.html" class="header-toolbar__btn mx-4">
-                                <i class="flaticon flaticon-like"></i>
-                            </a>
-                        </li>
                         <li class="header-toolbar__item mini-cart-item">
                             <a href="#miniCart" class="header-toolbar__btn toolbar-btn mini-cart-btn">
                                 <i class="flaticon flaticon-shopping-cart"></i>
                                 <sup class="mini-cart-count">{{ cart|length }}</sup>
                             </a>
                         </li>
-                        <li class="header-toolbar__item user-info">
-                            <a href="{% url 'profile' %}" class="header-toolbar__btn">
-                                <i class="flaticon flaticon-user"></i>
-                            </a>
-                            <ul class="user-info-menu">
-                                {% if user.is_authenticated %}
+                        {% if user.is_authenticated %}
+
+                            <li class="header-toolbar__item">
+                                <a href="{% url 'wish_list' %}" class="header-toolbar__btn mx-4">
+                                    <i class="flaticon flaticon-like"></i>
+                                </a>
+                            </li>
+
+                            <li class="header-toolbar__item user-info">
+                                <a href="{% url 'profile' %}" class="header-toolbar__btn">
+                                    <i class="flaticon flaticon-user"></i>
+                                </a>
+                                <ul class="user-info-menu">
+
                                     <li>
-                                        <a class="text-right" href="{% url 'profile' %}">{% trans 'User account' %}</a>
+                                        <a class="text-right"
+                                           href="{% url 'profile' %}">{% trans 'User account' %}</a>
                                     </li>
                                     <li>
-                                        <a class="text-right" href="{% url 'account_logout' %}">{% trans 'Logout' %}</a>
-                                    </li>
-                                    <li>
-                                        <a class="text-right" href="{% url 'cart_detail' %}">{% trans 'Cart' %}</a>
+                                        <a class="text-right"
+                                           href="{% url 'account_logout' %}">{% trans 'Logout' %}</a>
                                     </li>
 
-                                {% else %}
-                                    <li>
-                                        <a class="text-right" href="{% url 'account_login' %}">{% trans 'Login' %}</a>
-                                    </li>
-                                    <li>
-                                        <a class="text-right" href="{% url 'account_signup' %}">{% trans 'Signup' %}</a>
-                                    </li>
 
-                                {% endif %}
-                            </ul>
-                        </li>
+                                </ul>
+                            </li>
+                        {% endif %}
                         <li class="header-toolbar__item">
                             <a href="#searchForm" class="header-toolbar__btn toolbar-btn">
                                 <i class="flaticon flaticon-search"></i>
@@ -143,7 +150,7 @@
 <div class="searchform__popup" id="searchForm">
     <a href="#" class="btn-close"><i class="flaticon flaticon-cross"></i></a>
     <div class="searchform__body">
-        <p>در باکس زیر عبارت خود را وارد کنید</p>
+        <p>{% trans 'search using he box below' %}</p>
         <form class="searchform">
             <input type="text" name="popup-search" id="popup-search" class="searchform__input"
                    placeholder="جستجو در بین محصولات...">

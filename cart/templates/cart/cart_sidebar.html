@@ -1,5 +1,6 @@
 {% load i18n %}
-
+{% load persian_trans_tags %}
+{% load humanize %}
 <aside class="mini-cart" id="miniCart">
     <div class="mini-cart-wrapper">
         <a href="" class="btn-close"><i class="flaticon flaticon-cross"></i></a>
@@ -23,7 +24,7 @@
                                         </a>
                                     </span>
                                 <span class="mini-cart__product__quantity">
-                                        <span>{% trans '$' %}{{ item.product_obj.price }}</span> &#215; <span>۱</span>
+                                        <span>{% trans '$' %}{{ item.product_obj.get_final_price|intcomma:False|translate_numbers }}</span> &#215; <span>{{ item.quantity|translate_numbers }}</span>
                                     </span>
                             </div>
                         </li>
@@ -33,7 +34,7 @@
                 </ul>
                 <div class="mini-cart__total">
                     <span>{% trans 'Total' %}</span>
-                    <span class="ammount">{% trans '$' %}{{ cart.get_total_price }}</span>
+                    <span class="ammount">{% trans '$' %}{{ cart.get_total_price|intcomma:False|translate_numbers }}</span>
                 </div>
                 <div class="mini-cart__buttons">
                     <a href="{% url 'cart_detail' %}" class="btn btn-fullwidth btn-bg-sand mb--20">{% trans 'Go to my Cart' %}</a>

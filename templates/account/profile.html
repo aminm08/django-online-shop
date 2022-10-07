@@ -30,7 +30,7 @@
             {% csrf_token %}
             {{ form|crispy }}
             <button type="submit" class="btn btn-success">{% trans 'Update profile' %}</button>
-            <a href="{% url 'account_change_password' %}" class="btn btn-info">Change password</a>
+            <a href="{% url 'account_change_password' %}" class="btn btn-info">{% trans 'Change password' %}</a>
             <br><br>
         </form>
 

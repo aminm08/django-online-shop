@@ -26,8 +26,9 @@ class Product(models.Model):
 
     def get_final_price(self):
         if self.discount:
-            return self.price-self.discount
+            return self.price - self.discount
         return self.price
+
 
 class Comment(models.Model):
     RATING_CHOICES = (
@@ -53,3 +54,11 @@ class Comment(models.Model):
 
     def get_absolute_url(self):
         return reverse('product_detail', args=[self.product.id])
+
+
+class WishList(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='wish_list')
+
+    def __str__(self):
+        return f'{self.user}:{self.product}'
