@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django.contrib.auth import get_user_model
+from django.template.defaultfilters import slugify
 
 from ckeditor.fields import RichTextField
 
@@ -14,20 +15,40 @@ class Product(models.Model):
     discount = models.PositiveIntegerField(default=0, verbose_name=_('discount on this product'))
     active = models.BooleanField(default=True, verbose_name=_('is this product available'))
     cover = models.ImageField(upload_to='product_covers/', verbose_name=_('Product cover'), blank=True)
+    slug = models.SlugField(null=True)
+    category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.CASCADE, related_name='products')
 
     datetime_created = models.DateTimeField(verbose_name=_('Creation date time'), default=timezone.now)
     datetime_modified = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ('slug', 'pk')
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('product_detail', args=[self.id])
+        return reverse('product_detail', args=[self.id, self.slug])
 
     def get_final_price(self):
         if self.discount:
             return self.price - self.discount
         return self.price
+
+    def get_catg_list(self):
+        k = self.category
+        breadcrumb = ['dummy']
+        while k is not None:
+            breadcrumb.append(k.slug)
+            k = k.parent
+        for i in range(len(breadcrumb) - 1):
+            breadcrumb[i] = '/'.join(breadcrumb[-1:i - 1:-1])
+        return breadcrumb[-1:0:-1]
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
 
 
 class Comment(models.Model):
@@ -62,3 +83,21 @@ class WishList(models.Model):
 
     def __str__(self):
         return f'{self.user}:{self.product}'
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=200)
+    slug = models.SlugField()
+    parent = models.ForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('slug', 'parent')
+        verbose_name_plural = 'categories'
+
+    def __str__(self):
+        full_path = [self.name]
+        k = self.parent
+        while k is not None:
+            full_path.append(k.name)
+            k = k.parent
+        return ' -> '.join(full_path[::-1])

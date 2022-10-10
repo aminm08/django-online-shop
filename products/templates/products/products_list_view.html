@@ -2,11 +2,11 @@
 
 {% load i18n %}
 {% load humanize %}
+{% load static %}
 {% load persian_trans_tags %}
 {% block title %}{% trans 'Products' %}{% endblock title %}
 
 {% block content %}
-
 
 
     <!--      --><!-- Preloader Start -->
@@ -58,11 +58,18 @@
                                                                 {% if product.discount %}
 
                                                                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                                                        <span style="color:white;">{% trans 'off' %}</span>
+                                                                            <span style="color:white;">{% trans 'off' %}</span>
 
-                                                                    </span>
+                                                                        </span>
                                                                 {% endif %}
-                                                                <img src="{{ product.cover.url }}" alt="Products">
+                                                                {% if product.cover %}
+
+                                                                    <img src="{{ product.cover.url }}" alt="Products">
+                                                                {% else %}
+                                                                    <img src="{% static 'img/blank_product.jpg' %}"
+                                                                         alt="Products">
+                                                                {% endif %}
+
                                                             </a>
                                                             <div class="ShoppingYar-product-action">
                                                                 <div class="product-action d-flex">
@@ -121,8 +128,6 @@
         <!-- Global Overlay End -->
 
     </div>
-
-    </body>
 
 
 {% endblock content %}

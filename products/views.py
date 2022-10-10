@@ -1,5 +1,5 @@
 from django.views import generic
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -7,7 +7,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import gettext as _
 
-from .models import Product, Comment, WishList
+from .models import Product, Comment, WishList, Category
 from .forms import CommentForm
 
 
@@ -18,15 +18,27 @@ class ProductListView(generic.ListView):
     paginate_by = 9
 
 
-class ProductDetailView(generic.DetailView):
-    model = Product
-    template_name = 'products/products_detail_view.html'
-    context_object_name = 'product'
+def category_show_product_list(request, slugs):
+    slugs = slugs.split('/')
+    category_queryset = list(Category.objects.all())
+    all_slugs = [i.slug for i in category_queryset]
+    parent = None
+    for slug in all_slugs:
+        if slug in all_slugs:
+            parent = get_object_or_404(Category, slug=slug, parent=parent)
+        else:
+            instance = get_object_or_404(Product, slug=slug)
+            breadcrumbs_link = instance.get_catg_list()
+            category_name = [' '.join(i.split('/')[-1].split('-')) for i in breadcrumbs_link]
+            breadcrumbs = zip(breadcrumbs_link, category_name)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['comment_form'] = CommentForm()
-        return context
+
+def product_detail_view(request, pk, slug):
+    product = get_object_or_404(Product, pk=pk, slug=slug)
+    print(product.category)
+    print(product.get_catg_list()[-1])
+
+    return render(request, 'products/products_detail_view.html', {'product': product, 'comment_form': CommentForm()})
 
 
 class CommentCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
