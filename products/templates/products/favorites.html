@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load humanize %}
 {% load persian_trans_tags %}
+{% load static %}
 {% block title %}{% trans 'Products' %}{% endblock title %}
 
 {% block content %}
@@ -22,7 +23,6 @@
     <!-- Main Wrapper Start -->
     <div class="wrapper">
 
-
         <!-- Main Content Wrapper Start -->
         <div class="main-content-wrapper container-fluid">
             <div class="shop-page-wrapper shop-fullwidth">
@@ -32,24 +32,45 @@
                             <div class="tab-content" id="product-tab-content">
                                 <div class="tab-pane fade show active" id="nav-all">
                                     <div class="row xxl-block-grid-6 grid-space-20">
-                                        {% for product in products %}
+                                        {% for favorite in favorites %}
+
                                             <div class="col-xl-3 col-md-4 col-sm-6 mb--50">
                                                 <div class="ShoppingYar-product">
                                                     <div class="product-inner">
                                                         <figure class="product-image">
-                                                            <a href="{{ product.get_absolute_url }}">
-                                                                <img src="{{ product.cover.url }}" alt="Products">
+                                                            <a href="{{ favorite.product.get_absolute_url }}">
+
+                                                                {% if favorite.product.cover %}
+
+                                                                    <img src="{{ favorite.product.cover.url }}" alt="Products">
+
+                                                                {% else %}
+                                                                    <img src="{% static 'img/blank_product.jpg' %}"
+                                                                         alt="">
+                                                                {% endif %}
                                                             </a>
+                                                        {{ product.wish_list.id }}
+                                                            <div class="ShoppingYar-product-action">
+                                                                <div class="product-action d-flex">
+                                                                    <form action="{% url 'favorites_delete' favorite.id %}"
+                                                                          method="post">
+                                                                        {% csrf_token %}
+                                                                        <button type="submit" class="action-btn">
+                                                                            <i class="fa fa-trash"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
 
                                                         </figure>
                                                         <div class="product-info">
                                                             <h3 class="product-title mb--15">
-                                                                <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+                                                                <a href="{{ favorite.product.get_absolute_url }}">{{ favorite.product.title }}</a>
                                                             </h3>
 
                                                             <div class="product-price-wrapper mb--30">
 
-                                                                <span class="money">{{ product.price|intcomma:False|translate_numbers }} {% trans '$' %}</span>
+                                                                <span class="money">{{ favorite.product.price|intcomma:False|translate_numbers }} {% trans '$' %}</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -70,7 +91,7 @@
         <!-- Global Overlay End -->
 
     </div>
-</body>
+    </body>
 
 
 {% endblock content %}

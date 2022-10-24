@@ -1,12 +1,12 @@
 from django.contrib import admin
 
 from jalali_date.admin import ModelAdminJalaliMixin
-from .models import Product, Comment, WishList, Category
+from .models import Product, Comment, Favorite
 
 
 @admin.register(Product)
 class ProductAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
-    list_display = ['title', 'price', 'active', 'category']
+    list_display = ['title', 'price', 'active']
     prepopulated_fields = {'slug': ('title', )}
     ordering = ['-price', ]
 
@@ -18,9 +18,9 @@ class CommentAdmin(admin.ModelAdmin):
     list_filter = ['active', ]
 
 
-admin.site.register(WishList)
+admin.site.register(Favorite)
 
 
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('name',)}
+# @admin.register(Category)
+# class CategoryAdmin(admin.ModelAdmin):
+#     prepopulated_fields = {'slug': ('name',)}

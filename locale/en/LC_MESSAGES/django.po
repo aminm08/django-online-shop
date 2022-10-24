@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-07 11:14+0330\n"
+"POT-Creation-Date: 2022-10-24 05:51+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,7 +38,7 @@ msgid "blog cover"
 msgstr ""
 
 #: .\blog\models.py:22
-msgid "is this blog active?"
+msgid "blog's status"
 msgstr ""
 
 #: .\blog\templates\blog\blog_create_temp.html:6
@@ -47,7 +47,7 @@ msgstr ""
 
 #: .\blog\templates\blog\blog_create_temp.html:20
 #: .\blog\templates\blog\blog_update_temp.html:20
-#: .\products\templates\products\products_detail_view.html:164
+#: .\products\templates\products\products_detail_view.html:180
 msgid "Submit"
 msgstr ""
 
@@ -71,13 +71,14 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: .\blog\templates\blog\blog_detail_temp.html:26
+#: .\blog\templates\blog\blog_detail_temp.html:27
 msgid "Author"
 msgstr ""
 
 #: .\blog\templates\blog\blog_list_temp.html:7
-#: .\products\templates\products\products_list_view.html:6
-#: .\products\templates\products\wish_list.html:6 .\templates\_base.html:58
+#: .\products\templates\products\favorites.html:7
+#: .\products\templates\products\products_list_view.html:7
+#: .\templates\_base.html:58
 msgid "Products"
 msgstr ""
 
@@ -107,19 +108,19 @@ msgstr ""
 
 #: .\cart\templates\cart\cart_detail_temp.html:9
 #: .\cart\templates\cart\cart_detail_temp.html:13
-#: .\cart\templates\cart\cart_sidebar.html:7
+#: .\cart\templates\cart\cart_sidebar.html:8
 msgid "Cart"
 msgstr ""
 
 #: .\cart\templates\cart\cart_detail_temp.html:88
 #: .\cart\templates\cart\cart_detail_temp.html:126
-#: .\cart\templates\cart\cart_sidebar.html:26
-#: .\cart\templates\cart\cart_sidebar.html:36
-#: .\products\templates\products\products_detail_view.html:51
-#: .\products\templates\products\products_detail_view.html:53
-#: .\products\templates\products\products_detail_view.html:55
-#: .\products\templates\products\products_list_view.html:86
-#: .\products\templates\products\wish_list.html:52
+#: .\cart\templates\cart\cart_sidebar.html:27
+#: .\cart\templates\cart\cart_sidebar.html:37
+#: .\products\templates\products\favorites.html:73
+#: .\products\templates\products\products_detail_view.html:58
+#: .\products\templates\products\products_detail_view.html:60
+#: .\products\templates\products\products_detail_view.html:62
+#: .\products\templates\products\products_list_view.html:93
 msgid "$"
 msgstr ""
 
@@ -136,7 +137,7 @@ msgid "Empty cart"
 msgstr ""
 
 #: .\cart\templates\cart\cart_detail_temp.html:118
-#: .\cart\templates\cart\cart_sidebar.html:35
+#: .\cart\templates\cart\cart_sidebar.html:36
 msgid "Total"
 msgstr ""
 
@@ -145,11 +146,11 @@ msgid "Total price"
 msgstr ""
 
 #: .\cart\templates\cart\cart_detail_temp.html:133
-#: .\cart\templates\cart\cart_sidebar.html:40
+#: .\cart\templates\cart\cart_sidebar.html:41
 msgid "Checkout"
 msgstr ""
 
-#: .\cart\templates\cart\cart_sidebar.html:39
+#: .\cart\templates\cart\cart_sidebar.html:40
 msgid "Go to my Cart"
 msgstr ""
 
@@ -161,63 +162,63 @@ msgstr ""
 msgid "your cart is already empty!"
 msgstr ""
 
-#: .\products\models.py:11
+#: .\products\models.py:12
 msgid "product title"
 msgstr ""
 
-#: .\products\models.py:12
+#: .\products\models.py:13
 msgid "product description"
 msgstr ""
 
-#: .\products\models.py:13
+#: .\products\models.py:14
 msgid "product price"
 msgstr ""
 
-#: .\products\models.py:14
+#: .\products\models.py:15
 msgid "discount on this product"
 msgstr ""
 
-#: .\products\models.py:15
+#: .\products\models.py:16
 msgid "is this product available"
 msgstr ""
 
-#: .\products\models.py:16
+#: .\products\models.py:17
 msgid "Product cover"
 msgstr ""
 
-#: .\products\models.py:18
+#: .\products\models.py:21
 msgid "Creation date time"
 msgstr ""
 
-#: .\products\models.py:35
+#: .\products\models.py:56
 msgid "Very bad"
 msgstr ""
 
-#: .\products\models.py:36
+#: .\products\models.py:57
 msgid "Bad"
 msgstr ""
 
-#: .\products\models.py:37
+#: .\products\models.py:58
 msgid "Normal"
 msgstr ""
 
-#: .\products\models.py:38
+#: .\products\models.py:59
 msgid "Good"
 msgstr ""
 
-#: .\products\models.py:39
+#: .\products\models.py:60
 msgid "Perfect"
 msgstr ""
 
-#: .\products\models.py:42
+#: .\products\models.py:63
 msgid "Comment text"
 msgstr ""
 
-#: .\products\models.py:43
+#: .\products\models.py:64
 msgid "your score"
 msgstr ""
 
-#: .\products\models.py:47
+#: .\products\models.py:68
 msgid "is this comment active"
 msgstr ""
 
@@ -225,31 +226,35 @@ msgstr ""
 msgid "Product details"
 msgstr ""
 
-#: .\products\templates\products\products_detail_view.html:71
+#: .\products\templates\products\products_detail_view.html:78
 msgid "Add to Cart"
 msgstr ""
 
-#: .\products\templates\products\products_detail_view.html:88
+#: .\products\templates\products\products_detail_view.html:95
 msgid "Product description"
 msgstr ""
 
-#: .\products\templates\products\products_detail_view.html:93
-msgid "comments"
+#: .\products\templates\products\products_detail_view.html:100
+msgid "comment"
 msgstr ""
 
-#: .\products\templates\products\products_detail_view.html:108
+#: .\products\templates\products\products_detail_view.html:118
 msgid "comments for "
 msgstr ""
 
-#: .\products\templates\products\products_detail_view.html:131
+#: .\products\templates\products\products_detail_view.html:122
+msgid "comment for "
+msgstr ""
+
+#: .\products\templates\products\products_detail_view.html:147
 msgid "Rated"
 msgstr ""
 
-#: .\products\templates\products\products_detail_view.html:132
+#: .\products\templates\products\products_detail_view.html:148
 msgid "out of"
 msgstr ""
 
-#: .\products\templates\products\products_detail_view.html:152
+#: .\products\templates\products\products_detail_view.html:168
 msgid "write your comment"
 msgstr ""
 
@@ -257,20 +262,24 @@ msgstr ""
 msgid "off"
 msgstr ""
 
-#: .\products\templates\products\products_list_view.html:95
+#: .\products\templates\products\products_list_view.html:102
 msgid "Add to cart"
 msgstr ""
 
-#: .\products\views.py:36
+#: .\products\views.py:53
 msgid "your comment successfully added "
 msgstr ""
 
-#: .\products\views.py:70
-msgid "product successfully added to wishlist"
+#: .\products\views.py:86
+msgid "product successfully added to favorites"
 msgstr ""
 
-#: .\products\views.py:74
-msgid "this product is already in your wishlist"
+#: .\products\views.py:90
+msgid "this product is already in your favorites"
+msgstr ""
+
+#: .\products\views.py:99
+msgid "product successfully deleted from your favorites"
 msgstr ""
 
 #: .\templates\_base.html:53
@@ -365,11 +374,11 @@ msgstr ""
 msgid "Profile"
 msgstr ""
 
-#: .\templates\account\profile.html:32
+#: .\templates\account\profile.html:36
 msgid "Update profile"
 msgstr ""
 
-#: .\templates\account\profile.html:33
+#: .\templates\account\profile.html:37
 msgid "Change password"
 msgstr ""
 

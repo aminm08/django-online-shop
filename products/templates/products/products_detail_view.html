@@ -97,7 +97,7 @@
 
                                     <a class="m-0 product-data-tab__link nav-link" id="nav-reviews-tab"
                                        data-toggle="tab" href="#nav-reviews" role="tab" aria-selected="true">
-                                        <span>{{ product.comments.all|active_comments|length|translate_numbers }} {% trans 'comments' %}</span>
+                                        <span>{{ product.comments.all|active_comments|length|translate_numbers }} {% trans 'comment' %}</span>
                                     </a>
                                 </div>
                                 <div class="tab-content product-data-tab__content" id="product-tabContent">
@@ -112,7 +112,11 @@
                                          aria-labelledby="nav-reviews-tab">
                                         <div class="product-reviews">
                                             <h3 class="review__title">
-                                                {{ product.comments.all|active_comments|length|translate_numbers }} {% trans 'comments for ' %} {{ product.title }}</h3>
+                                               
+                                                {{ product.comments.all|active_comments|length|translate_numbers }}
+                                                {% trans 'comment for ' %} {{ product.title }}
+
+                                            </h3>
                                             <ul class="review__list">
                                                 {% for comment in product.comments.all|active_comments %}
                                                     <li class="review__item">

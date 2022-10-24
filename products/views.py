@@ -6,8 +6,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import gettext as _
+from django.urls import reverse_lazy
 
-from .models import Product, Comment, WishList, Category
+from .models import Product, Comment, Favorite
 from .forms import CommentForm
 
 
@@ -18,27 +19,31 @@ class ProductListView(generic.ListView):
     paginate_by = 9
 
 
-def category_show_product_list(request, slugs):
-    slugs = slugs.split('/')
-    category_queryset = list(Category.objects.all())
-    all_slugs = [i.slug for i in category_queryset]
-    parent = None
-    for slug in all_slugs:
-        if slug in all_slugs:
-            parent = get_object_or_404(Category, slug=slug, parent=parent)
-        else:
-            instance = get_object_or_404(Product, slug=slug)
-            breadcrumbs_link = instance.get_catg_list()
-            category_name = [' '.join(i.split('/')[-1].split('-')) for i in breadcrumbs_link]
-            breadcrumbs = zip(breadcrumbs_link, category_name)
+class ProductDetailView(generic.DetailView):
+    model = Product
+    template_name = 'products/products_detail_view.html'
+    context_object_name = 'product'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comment_form'] = CommentForm()
+        return context
 
 
-def product_detail_view(request, pk, slug):
-    product = get_object_or_404(Product, pk=pk, slug=slug)
-    print(product.category)
-    print(product.get_catg_list()[-1])
-
-    return render(request, 'products/products_detail_view.html', {'product': product, 'comment_form': CommentForm()})
+#
+# def category_show_product_list(request, slugs):
+#     slugs = slugs.split('/')
+#     category_queryset = list(Category.objects.all())
+#     all_slugs = [i.slug for i in category_queryset]
+#     parent = None
+#     for slug in all_slugs:
+#         if slug in all_slugs:
+#             parent = get_object_or_404(Category, slug=slug, parent=parent)
+#         else:
+#             instance = get_object_or_404(Product, slug=slug)
+#             breadcrumbs_link = instance.get_catg_list()
+#             category_name = [' '.join(i.split('/')[-1].split('-')) for i in breadcrumbs_link]
+#             breadcrumbs = zip(breadcrumbs_link, category_name)
 
 
 class CommentCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
@@ -59,29 +64,42 @@ class CommentCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateV
         return super().form_valid(form)
 
 
-class WishListView(LoginRequiredMixin, generic.ListView):
-    template_name = 'products/wish_list.html'
-    context_object_name = 'products'
+class UserFavoritesView(LoginRequiredMixin, generic.ListView):
+    template_name = 'products/favorites.html'
+    context_object_name = 'favorites'
 
     def get_queryset(self):
-        wish_list = self.request.user.wish_list.all()
-
-        return [wish.product for wish in wish_list]
+        return self.request.user.favorites.all()
 
 
-@require_POST
+
 @login_required()
-def add_product_to_wish_list(request, product_id):
+@require_POST
+def add_product_to_user_favorites(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
-    user_wish_list = request.user.wish_list.all()
-    ids = [i['product_id'] for i in user_wish_list.values()]
+    user_favorite_products= request.user.favorites.all()
+    user_favorites_all_product_ids = [favorite_obj.product.id for favorite_obj in user_favorite_products]
 
-    if product_id not in ids:
+    if product_id not in user_favorites_all_product_ids:
 
-        WishList.objects.create(user=request.user, product=product)
-        messages.success(request, _('product successfully added to wishlist'))
+        Favorite.objects.create(user=request.user, product=product)
+        messages.success(request, _('product successfully added to favorites'))
         return redirect('products_list')
 
     else:
-        messages.error(request, _('this product is already in your wishlist'))
+        messages.error(request, _('this product is already in your favorites'))
         return redirect('products_list')
+
+
+class DeleteProductFromUserFavoritesPostView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin,
+                                        generic.DeleteView):
+    model = Favorite
+    http_method = ['post']
+    success_url = reverse_lazy('favorites')
+    success_message = _('product successfully deleted from your favorites')
+
+    def test_func(self):
+        return self.get_object().user == self.request.user
+
+
+

@@ -7,14 +7,20 @@
 
 
 {% block content %}
-
-    <h1>{% trans 'are you sure you want to logout' %}</h1>
-
-    <form method="post">
+    <div class="container">
 
 
-        {% csrf_token %}
 
-        <button class="btn btn-danger" type="submit">{% trans 'Yes' %}</button>
-    </form>
+                <h1>{% trans 'are you sure you want to logout' %}</h1>
+
+                <form method="post">
+
+
+                    {% csrf_token %}
+
+                    <button class="btn btn-danger" type="submit">{% trans 'Yes' %}</button>
+                </form>
+            </div>
+
+    </div>
 {% endblock content %}

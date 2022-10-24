@@ -16,13 +16,13 @@ class Product(models.Model):
     active = models.BooleanField(default=True, verbose_name=_('is this product available'))
     cover = models.ImageField(upload_to='product_covers/', verbose_name=_('Product cover'), blank=True)
     slug = models.SlugField(null=True)
-    category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.CASCADE, related_name='products')
+    # category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.CASCADE, related_name='products')
 
     datetime_created = models.DateTimeField(verbose_name=_('Creation date time'), default=timezone.now)
     datetime_modified = models.DateTimeField(auto_now=True)
 
     class Meta:
-        unique_together = ('slug', 'pk')
+        unique_together = ('slug', 'id')
 
     def __str__(self):
         return self.title
@@ -35,15 +35,15 @@ class Product(models.Model):
             return self.price - self.discount
         return self.price
 
-    def get_catg_list(self):
-        k = self.category
-        breadcrumb = ['dummy']
-        while k is not None:
-            breadcrumb.append(k.slug)
-            k = k.parent
-        for i in range(len(breadcrumb) - 1):
-            breadcrumb[i] = '/'.join(breadcrumb[-1:i - 1:-1])
-        return breadcrumb[-1:0:-1]
+    # def get_catg_list(self):
+    #     k = self.category
+    #     breadcrumb = ['dummy']
+    #     while k is not None:
+    #         breadcrumb.append(k.slug)
+    #         k = k.parent
+    #     for i in range(len(breadcrumb) - 1):
+    #         breadcrumb[i] = '/'.join(breadcrumb[-1:i - 1:-1])
+    #     return breadcrumb[-1:0:-1]
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -74,30 +74,30 @@ class Comment(models.Model):
         return f'{self.author}:{self.get_rating_display()}'
 
     def get_absolute_url(self):
-        return reverse('product_detail', args=[self.product.id])
+        return reverse('product_detail', args=[self.product.id, self.product.slug])
 
 
-class WishList(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='wish_list')
+class Favorite(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='favorites')
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='favorites')
 
     def __str__(self):
         return f'{self.user}:{self.product}'
 
-
-class Category(models.Model):
-    name = models.CharField(max_length=200)
-    slug = models.SlugField()
-    parent = models.ForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
-
-    class Meta:
-        unique_together = ('slug', 'parent')
-        verbose_name_plural = 'categories'
-
-    def __str__(self):
-        full_path = [self.name]
-        k = self.parent
-        while k is not None:
-            full_path.append(k.name)
-            k = k.parent
-        return ' -> '.join(full_path[::-1])
+#
+# class Category(models.Model):
+#     name = models.CharField(max_length=200)
+#     slug = models.SlugField()
+#     parent = models.ForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
+#
+#     class Meta:
+#         unique_together = ('slug', 'parent')
+#         verbose_name_plural = 'categories'
+#
+#     def __str__(self):
+#         full_path = [self.name]
+#         k = self.parent
+#         while k is not None:
+#             full_path.append(k.name)
+#             k = k.parent
+#         return ' -> '.join(full_path[::-1])

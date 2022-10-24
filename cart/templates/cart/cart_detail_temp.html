@@ -42,7 +42,7 @@
                                                                 class="flaticon flaticon-cross"></i></a></td>
                                                     <td class="product-thumbnail text-left">
                                                         {% if item.product_obj.cover %}
-                                                            <a href="{% url 'product_detail' item.product_obj.id %}">
+                                                            <a href="{% url 'product_detail' item.product_obj.id item.product_obj.slug%}">
                                                                 <img src="{{ item.product_obj.cover.url }}"
                                                                      alt="Product Thumnail"></a>
 
@@ -54,7 +54,7 @@
                                                     </td>
                                                     <td class="product-name wide-column">
                                                         <h3>
-                                                            <a href="{% url 'product_detail' item.product_obj.id %}">
+                                                            <a href="{% url 'product_detail' item.product_obj.id item.product_obj.slug %}">
                                                                 {{ item.product_obj.title }}
                                                             </a>
                                                         </h3>

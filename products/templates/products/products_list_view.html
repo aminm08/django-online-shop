@@ -73,7 +73,7 @@
                                                             </a>
                                                             <div class="ShoppingYar-product-action">
                                                                 <div class="product-action d-flex">
-                                                                    <form action="{% url 'wish_list_add' product.id %}"
+                                                                    <form action="{% url 'favorites_add' product.id %}"
                                                                           method="post">
                                                                         {% csrf_token %}
                                                                         <button type="submit" class="action-btn">
