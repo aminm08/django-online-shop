@@ -12,11 +12,13 @@ class Order(models.Model):
     phone_number = models.CharField(max_length=15)
     address = models.CharField(max_length=700)
 
+    order_note = models.CharField(max_length=700, blank=True)
+
     datetime_created = models.DateTimeField(auto_now_add=True)
     datetime_modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'order {self.id} for {self.first_name, self.last_name}'
+        return f'order {self.id} for ({self.first_name} {self.last_name})'
 
 
 class OrderItem(models.Model):
