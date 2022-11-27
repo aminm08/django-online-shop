@@ -30,22 +30,6 @@ class ProductDetailView(generic.DetailView):
         return context
 
 
-#
-# def category_show_product_list(request, slugs):
-#     slugs = slugs.split('/')
-#     category_queryset = list(Category.objects.all())
-#     all_slugs = [i.slug for i in category_queryset]
-#     parent = None
-#     for slug in all_slugs:
-#         if slug in all_slugs:
-#             parent = get_object_or_404(Category, slug=slug, parent=parent)
-#         else:
-#             instance = get_object_or_404(Product, slug=slug)
-#             breadcrumbs_link = instance.get_catg_list()
-#             category_name = [' '.join(i.split('/')[-1].split('-')) for i in breadcrumbs_link]
-#             breadcrumbs = zip(breadcrumbs_link, category_name)
-
-
 class CommentCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     model = Comment
     form_class = CommentForm
@@ -72,12 +56,11 @@ class UserFavoritesView(LoginRequiredMixin, generic.ListView):
         return self.request.user.favorites.all()
 
 
-
 @login_required()
 @require_POST
 def add_product_to_user_favorites(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
-    user_favorite_products= request.user.favorites.all()
+    user_favorite_products = request.user.favorites.all()
     user_favorites_all_product_ids = [favorite_obj.product.id for favorite_obj in user_favorite_products]
 
     if product_id not in user_favorites_all_product_ids:
@@ -92,7 +75,7 @@ def add_product_to_user_favorites(request, product_id):
 
 
 class DeleteProductFromUserFavoritesPostView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin,
-                                        generic.DeleteView):
+                                             generic.DeleteView):
     model = Favorite
     http_method = ['post']
     success_url = reverse_lazy('favorites')
@@ -100,6 +83,3 @@ class DeleteProductFromUserFavoritesPostView(LoginRequiredMixin, UserPassesTestM
 
     def test_func(self):
         return self.get_object().user == self.request.user
-
-
-

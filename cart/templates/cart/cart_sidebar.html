@@ -1,6 +1,9 @@
 {% load i18n %}
 {% load persian_trans_tags %}
 {% load humanize %}
+{% load static %}
+
+
 <aside class="mini-cart" id="miniCart">
     <div class="mini-cart-wrapper">
         <a href="" class="btn-close"><i class="flaticon flaticon-cross"></i></a>
@@ -12,8 +15,16 @@
 
                         <li class="mini-cart__product d-flex justify-content-between">
                             <div class="mini-cart__product__image">
+
                                 <a href="{{ item.product_obj.get_absolute_url }}">
-                                    <img src="{{ item.product_obj.cover.url }}" alt="products">
+                                    {% if item.product_obj.cover %}
+
+                                        <img src="{{ item.product_obj.cover.url }}" alt="products">
+                                    {% else %}
+                                        <img class="m-auto" style="max-height: 400px;"
+                                             src="{% static 'img/blank_product.jpg' %}"
+                                             alt="">
+                                    {% endif %}
                                 </a>
                             </div>
                             <div class="mini-cart__product__content pt-2">
@@ -37,7 +48,8 @@
                     <span class="ammount">{% trans '$' %}{{ cart.get_total_price|intcomma:False|translate_numbers }}</span>
                 </div>
                 <div class="mini-cart__buttons">
-                    <a href="{% url 'cart_detail' %}" class="btn btn-fullwidth btn-bg-sand mb--20">{% trans 'Go to my Cart' %}</a>
+                    <a href="{% url 'cart_detail' %}"
+                       class="btn btn-fullwidth btn-bg-sand mb--20">{% trans 'Go to my Cart' %}</a>
                     <a href="checkout.html" class="btn btn-fullwidth btn-bg-sand">{% trans 'Checkout' %}</a>
                 </div>
             </div>
